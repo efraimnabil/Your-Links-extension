@@ -3,6 +3,7 @@ const inputEl = document.getElementById('input-el');
 const listEl = document.getElementById('ul-el');
 const deleteAllBtn = document.getElementById('delete-all');
 const saveTap = document.getElementById('save-tap');
+const message = document.querySelector(".message");
 let linksFromLocalStorage = JSON.parse(localStorage.getItem('links'));
 let links = [];
 
@@ -14,6 +15,14 @@ if(linksFromLocalStorage) {
 saveBtn.addEventListener('click', function() {
     let url = inputEl.value;
     if (url === '') {
+        return;
+    }
+    if (!isValidUrl(url)) {
+        message.classList.add('show');
+        setTimeout(function() {
+            message.classList.remove('show');
+        }
+        , 1000);
         return;
     }
     links.push(url);
@@ -76,3 +85,12 @@ saveTap.addEventListener('click', function() {
         renderLinks();
     });
 });
+
+function isValidUrl(url) {
+    try {
+        new URL(url);
+        return true;
+    } catch (e) {
+        return false;
+    }
+}

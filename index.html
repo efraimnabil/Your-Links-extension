@@ -1,15 +1,22 @@
 <html>
     <head>
         <link rel = "stylesheet" href = "style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Mansalva&display=swap" rel="stylesheet">
     </head>
-    <body>    
-        <input type = "text" id = "input-el">
+    <body>
+        <h3> Your Links </h3>
+        <input type = "text" id = "input-el" placeholder = "Enter your URL">
         <div class = "btns">
             <button id = "save-btn"> Save </button>
             <button id = "save-tap"> Save Tap </button>
             <button id = "delete-all"> Delete All </button>
         </div>
         <ul id = "ul-el"></ul>
+        <div class = "message">
+            Must be a valid URL
+        </div>
         <script src = "script.js"></script>
     </body>
 </html>
