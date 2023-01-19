@@ -1,0 +1,76 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    margin: 0;
+    padding: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-width: 400px;
+}
+
+#input-el{
+    width: 100%;
+    border-radius: 10px;
+    padding: 3px 10px;
+    margin: 10px 0;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+.btns{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+#save-btn , #delete-all, #save-tap{
+    width: 80px;
+    height: 30px;
+    background-color: green;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    margin: 0 5px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+#save-btn:hover, #delete-all:hover, #save-tap:hover{
+    background-color: #00cc00;
+}
+
+ul{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+li{
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 8px;
+    margin: 10px 0;
+    background-color: #f1f1f1;
+    display: flex;
+    justify-content: space-between;
+}
+
+#delete-link{
+    border: none;
+    border-radius: 10px;
+    margin: 0 10px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+a{
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 10px;
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+}
+
