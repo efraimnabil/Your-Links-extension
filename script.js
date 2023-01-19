@@ -64,9 +64,11 @@ function renderLinks() {
 }
 
 listEl.addEventListener('click', function(e) {
-    if (e.target.className === 'btn') {
-        let index = e.target.parentElement.getAttribute('data-index');
-        links.splice(index, 1);
+    if (e.target.id === 'delete-link') {
+        let link = e.target.parentElement.children[0].href;
+        links = links.filter(function(item) {
+            return item !== link;
+        });
         localStorage.setItem('links', JSON.stringify(links));
         renderLinks();
     }
