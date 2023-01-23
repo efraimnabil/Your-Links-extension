@@ -4,6 +4,7 @@ const listEl = document.getElementById('ul-el');
 const deleteAllBtn = document.getElementById('delete-all');
 const saveTap = document.getElementById('save-tap');
 const message = document.querySelector(".message");
+const popup = document.querySelector(".popup");
 let linksFromLocalStorage = JSON.parse(localStorage.getItem('links'));
 let links = [];
 
@@ -11,6 +12,7 @@ if(linksFromLocalStorage) {
     links = linksFromLocalStorage;
     renderLinks();
 }
+links = unique(links);
 
 saveBtn.addEventListener('click', function() {
     let url = inputEl.value;
@@ -25,7 +27,7 @@ saveBtn.addEventListener('click', function() {
         , 1000);
         return;
     }
-    links.push(url);
+    links.push([url, url]);
     localStorage.setItem('links', JSON.stringify(links));
     inputEl.value = '';
     renderLinks();
@@ -40,7 +42,14 @@ inputEl.addEventListener('keyup', function(e) {
 function unique(arr) {
     let result = [];
     for (let str of arr) {
-        if (!result.includes(str)) {
+        let isUnique = true;
+        for (let el of result) {
+            if (str[0] === el[0]) {
+                isUnique = false;
+                break;
+            }
+        }
+        if (isUnique) {
             result.push(str);
         }
     }
@@ -53,10 +62,12 @@ function renderLinks() {
     for (let i = 0; i < links.length; i++) {
         listItems += `
             <li>
-            <a href="${links[i]}" target = "_blank">
-            ${links[i]}
+            <a href = "${links[i][0]}" target = "_blank">${links[i][1]}
             </a>
-            <input type="button" value="Delete" class = "btn" id = "delete-link">
+            <aside id = "del-rename">
+            <input type = "button" value = "Delete" class = "btn" id = "delete-link">
+            <input type = "button" value = "Rename" class = "btn" id = "rename-link">
+            </aside>
             </li>
         `;
 }
@@ -65,15 +76,42 @@ function renderLinks() {
 
 listEl.addEventListener('click', function(e) {
     if (e.target.id === 'delete-link') {
-        let link = e.target.parentElement.children[0].href;
-        links = links.filter(function(item) {
-            return item !== link;
+        let url = e.target.parentElement.parentElement.children[0].href;
+        let index = links.findIndex(function(item) {
+            return item[0] === url;
         });
+        links.splice(index, 1);
         localStorage.setItem('links', JSON.stringify(links));
         renderLinks();
     }
 });
 
+listEl.addEventListener('click', function(e) {
+    if (e.target.id === 'rename-link') {
+        let url = e.target.parentElement.parentElement.children[0].href;
+        let index = links.findIndex(function(item) {
+            return item[0] === url;
+        });
+        popup.classList.add('show');
+        let titleInput = document.getElementById('title-input');
+        titleInput.value = links[index][1];
+        let saveTitleBtn = document.getElementById('save-title');
+        saveTitleBtn.addEventListener('click', function() {
+            let title = titleInput.value;
+            if(index !== -1) {
+                links[index][1] = title;
+            }
+            localStorage.setItem('links', JSON.stringify(links));
+            renderLinks();
+            popup.classList.remove('show');
+        });
+        let cancelTitleBtn = document.getElementById('cancel');
+        cancelTitleBtn.addEventListener('click', function() {
+            popup.classList.remove('show');
+        });
+    }
+});
+    
 deleteAllBtn.addEventListener('click', function() {
     links = [];
     localStorage.setItem('links', JSON.stringify(links));
@@ -82,7 +120,9 @@ deleteAllBtn.addEventListener('click', function() {
 
 saveTap.addEventListener('click', function() {
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-        links.push(tabs[0].url);
+        let url = tabs[0].url;
+        let title = tabs[0].title;
+        links.push([url, title]);
         localStorage.setItem('links', JSON.stringify(links));
         renderLinks();
     });
