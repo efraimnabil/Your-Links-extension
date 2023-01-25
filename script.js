@@ -62,11 +62,13 @@ function renderLinks() {
     for (let i = 0; i < links.length; i++) {
         listItems += `
             <li>
-            <a href = "${links[i][0]}" target = "_blank">${links[i][1]}
+            <a
+            href = "${links[i][0]}" target = "_blank"> <span class= "title"> ${links[i][1]} </span>
+            <span class = "url"> ${links[i][0]}</span>
             </a>
             <aside id = "del-rename">
-            <input type = "button" value = "Delete" class = "btn" id = "delete-link">
             <input type = "button" value = "Rename" class = "btn" id = "rename-link">
+            <input type = "button" value = "Delete" class = "btn" id = "delete-link">
             </aside>
             </li>
         `;
@@ -96,14 +98,16 @@ listEl.addEventListener('click', function(e) {
         let titleInput = document.getElementById('title-input');
         titleInput.value = links[index][1];
         let saveTitleBtn = document.getElementById('save-title');
+        let clicked = 0;
         saveTitleBtn.addEventListener('click', function() {
-            let title = titleInput.value;
-            if(index !== -1) {
-                links[index][1] = title;
+            clicked++;
+            let click = clicked === 1;
+            if(click) {
+                links[index][1] = titleInput.value;
+                localStorage.setItem('links', JSON.stringify(links));
+                renderLinks();
+                popup.classList.remove('show');
             }
-            localStorage.setItem('links', JSON.stringify(links));
-            renderLinks();
-            popup.classList.remove('show');
         });
         let cancelTitleBtn = document.getElementById('cancel');
         cancelTitleBtn.addEventListener('click', function() {
@@ -129,10 +133,11 @@ saveTap.addEventListener('click', function() {
 });
 
 function isValidUrl(url) {
-    try {
-        new URL(url);
-        return true;
-    } catch (e) {
-        return false;
-    }
+    let pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
+        '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+        '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+        '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+    return !!pattern.test(url);
 }
