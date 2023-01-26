@@ -1,4 +1,7 @@
 # Your-Links-extension
+<p align = "center">
+  <img width = "350" src="images/your-links.png">
+</p>
 
 Your-Links is a Chrome extension that allows you to save your favorite links and taps in a simple and easy way.
 
@@ -29,3 +32,5 @@ Click on the extension icon to open the extension
 - Click on `Delete All` to delete all the saved links.
 
 - Click on `Delete` to delete a specific link.
+
+- Click on `rename` to rename a specific link.
