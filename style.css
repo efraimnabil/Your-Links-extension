@@ -45,6 +45,7 @@ h3{
 #save-btn , #delete-all, #save-tap{
     width: 80px;
     height: 30px;
+    font-weight: 800;
     background-color: green;
     color: white;
     border: none;
@@ -52,11 +53,15 @@ h3{
     margin: 0 5px;
     cursor: pointer;
     font-size: 15px;
-    font-family: quicksand;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
-#save-btn:hover, #delete-all:hover, #save-tap:hover{
+#save-btn:hover, #save-tap:hover{
     background-color: #00cc00;
+}
+
+#delete-all:hover{
+    background-color: #ff0000;
 }
 
 ul{
@@ -133,7 +138,7 @@ a:hover{
     transition: all .8s ease-in-out;
     font-size: 15px;
     font-weight: bold;
-    background-color: #00cc00;
+    background-color: #ff0000;
     color: white;
   }
 
