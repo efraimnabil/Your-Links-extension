@@ -1,6 +1,6 @@
 # Your-Links-extension
 <p align = "center">
-  <img width = "350" src="images/your-links.png">
+  <img width = "350" src="images/Your-Links.png">
 </p>
 
 Your-Links is a Chrome extension that allows you to save your favorite links and taps in a simple and easy way.
