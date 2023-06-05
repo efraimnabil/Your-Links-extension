@@ -141,9 +141,3 @@ function isValidUrl(url) {
         '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
     return !!pattern.test(url);
 }
-
-const dragArea = document.getElementById('ul-el');
-new Sortable(dragArea, {
-    animation: 350
-});
-
