@@ -61,7 +61,7 @@ function renderLinks() {
     links = unique(links);
     for (let i = 0; i < links.length; i++) {
         listItems += `
-            <li>
+            <li class = "list-item" draggable = "true">
             <a
             href = "${links[i][0]}" target = "_blank"> <span class= "title"> ${links[i][1]} </span>
             <span class = "url"> ${links[i][0]}</span>
@@ -142,8 +142,39 @@ function isValidUrl(url) {
     return !!pattern.test(url);
 }
 
-const dragArea = document.getElementById('ul-el');
-new Sortable(dragArea, {
-    animation: 350
+const sortableList = document.getElementById('ul-el');
+const items = document.querySelectorAll('.list-item');
+
+items.forEach((item) => {
+    item.addEventListener('dragstart', () => {
+        setTimeout(() => item.classList.add('dragging'), 0);
+    });
+    item.addEventListener('dragend', () => item.classList.remove('dragging'));
+    item.addEventListener('dragend', () => {
+        links = [];
+        let listItems = document.querySelectorAll('.list-item');
+        listItems.forEach((item) => {
+            let url = item.children[0].href;
+            let title = item.children[0].children[0].textContent;
+            links.push([url, title]);
+        });
+        localStorage.setItem('links', JSON.stringify(links));
+    });
 });
 
+const initSortableList = (e) => {
+    e.preventDefault();
+    const draggingItem = document.querySelector('.dragging');
+
+    let siblings = [...sortableList.querySelectorAll('.list-item:not(.dragging)')];
+
+    let nextSibling = siblings.find((sibling) => {
+        return e.clientY <= sibling.offsetTop + sibling.offsetHeight / 2;
+    });
+
+
+    sortableList.insertBefore(draggingItem, nextSibling);
+};
+
+sortableList.addEventListener('dragover', initSortableList);
+sortableList.addEventListener('dragenter', e => e.preventDefault());
