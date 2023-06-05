@@ -34,3 +34,5 @@ Click on the extension icon to open the extension
 - Click on `Delete` to delete a specific link.
 
 - Click on `rename` to rename a specific link.
+
+- Sort the links by the priority by drag and drop.
