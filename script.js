@@ -108,6 +108,7 @@ listEl.addEventListener('click', function(e) {
                 renderLinks();
                 popup.classList.remove('show');
             }
+            window.location.reload();
         });
         let cancelTitleBtn = document.getElementById('cancel');
         cancelTitleBtn.addEventListener('click', function() {
