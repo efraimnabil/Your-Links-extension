@@ -130,6 +130,7 @@ saveTap.addEventListener('click', function() {
         localStorage.setItem('links', JSON.stringify(links));
         renderLinks();
     });
+    window.location.reload();
 });
 
 function isValidUrl(url) {
